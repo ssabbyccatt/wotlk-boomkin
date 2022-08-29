@@ -139,11 +139,15 @@ type Deathknight struct {
 	IceboundFortitude     *RuneSpell
 	IceboundFortitudeAura *core.Aura
 
+	DeathPact *RuneSpell
+
 	// Diseases
-	FrostFeverSpell    *RuneSpell
-	BloodPlagueSpell   *RuneSpell
-	FrostFeverDisease  []*core.Dot
-	BloodPlagueDisease []*core.Dot
+	FrostFeverSpell     *RuneSpell
+	BloodPlagueSpell    *RuneSpell
+	FrostFeverDisease   []*core.Dot
+	BloodPlagueDisease  []*core.Dot
+	FrostFeverExtended  []int
+	BloodPlagueExtended []int
 
 	UnholyBlightSpell      *core.Spell
 	UnholyBlightDot        []*core.Dot
@@ -161,6 +165,7 @@ type Deathknight struct {
 	BladeBarrierAura    *core.Aura
 	SuddenDoomAura      *core.Aura
 	ScentOfBloodAura    *core.Aura
+	WillOfTheNecropolis *core.Aura
 
 	// Talent Spells
 	LastDiseaseDamage float64
@@ -256,6 +261,7 @@ func (dk *Deathknight) Initialize() {
 	dk.registerSummonGargoyleCD()
 	dk.registerArmyOfTheDeadCD()
 	dk.registerDancingRuneWeaponCD()
+	dk.registerDeathPactSpell()
 }
 
 func (dk *Deathknight) ResetBonusCoeffs() {
@@ -343,14 +349,18 @@ func NewDeathknight(character core.Character, talents proto.DeathknightTalents, 
 		dk.Gargoyle = dk.NewGargoyle()
 	}
 
-	dk.ArmyGhoul = make([]*GhoulPet, 8)
-	for i := 0; i < 8; i++ {
-		dk.ArmyGhoul[i] = dk.NewArmyGhoulPet(i)
+	if dk.Inputs.ArmyOfTheDeadType != proto.Deathknight_Rotation_DoNotUse {
+		dk.ArmyGhoul = make([]*GhoulPet, 8)
+		for i := 0; i < 8; i++ {
+			dk.ArmyGhoul[i] = dk.NewArmyGhoulPet(i)
+		}
 	}
 
-	dk.Bloodworm = make([]*BloodwormPet, 4)
-	for i := 0; i < 4; i++ {
-		dk.Bloodworm[i] = dk.NewBloodwormPet(i)
+	if dk.Talents.Bloodworms > 0 {
+		dk.Bloodworm = make([]*BloodwormPet, 4)
+		for i := 0; i < 4; i++ {
+			dk.Bloodworm[i] = dk.NewBloodwormPet(i)
+		}
 	}
 
 	dk.RuneWeapon = dk.NewRuneWeapon()

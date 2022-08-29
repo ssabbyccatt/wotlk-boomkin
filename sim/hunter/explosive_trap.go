@@ -53,6 +53,10 @@ func (hunter *Hunter) registerExplosiveTrapSpell(timer *core.Timer) {
 			applyAOEDamage(sim, target, spell)
 			hunter.ExplosiveTrapDot.Apply(sim)
 		},
+
+		InitialDamageMultiplier: 1 +
+			.10*float64(hunter.Talents.TrapMastery) +
+			.02*float64(hunter.Talents.TNT),
 	})
 
 	periodicOutcomeFunc := hunter.OutcomeFuncRangedHit()
@@ -72,10 +76,8 @@ func (hunter *Hunter) registerExplosiveTrapSpell(timer *core.Timer) {
 			ProcMask: core.ProcMaskPeriodicDamage,
 
 			BonusSpellHitRating: float64(hunter.Talents.SurvivalTactics) * 2 * core.SpellHitRatingPerHitChance,
-			DamageMultiplier: 1 *
-				(1 + 0.02*float64(hunter.Talents.TNT)) *
-				(1 + 0.1*float64(hunter.Talents.TrapMastery)),
-			ThreatMultiplier: 1,
+			DamageMultiplier:    1,
+			ThreatMultiplier:    1,
 
 			BaseDamage: core.BaseDamageConfig{
 				Calculator: func(sim *core.Simulation, hitEffect *core.SpellEffect, spell *core.Spell) float64 {
@@ -97,11 +99,7 @@ func (hunter *Hunter) registerExplosiveTrapSpell(timer *core.Timer) {
 		ApplyEffects: func(sim *core.Simulation, target *core.Unit, spell *core.Spell) {
 			// Assume we started running after the most recent ranged auto, so that time
 			// can be subtracted from the run in.
-			lastRangedAutoAt := hunter.AutoAttacks.RangedSwingAt - hunter.AutoAttacks.RangedSwingSpeed()
-			if sim.CurrentTime == 0 {
-				lastRangedAutoAt = 0
-			}
-			reachLocationAt := lastRangedAutoAt + halfWeaveTime
+			reachLocationAt := hunter.mayMoveAt + halfWeaveTime
 			layTrapAt := core.MaxDuration(reachLocationAt, sim.CurrentTime)
 			doneAt := layTrapAt + halfWeaveTime
 

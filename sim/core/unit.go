@@ -15,6 +15,8 @@ const (
 	PetUnit
 )
 
+type DynamicDamageTakenModifier func(sim *Simulation, spellEffect *SpellEffect)
+
 // Unit is an abstraction of a Character/Boss/Pet/etc, containing functionality
 // shared by all of them.
 type Unit struct {
@@ -85,6 +87,9 @@ type Unit struct {
 	// All spells that can be cast by this unit.
 	Spellbook []*Spell
 
+	// Pets owned by this Unit.
+	Pets []PetAgent
+
 	// AutoAttacks is the manager for auto attack swings.
 	// Must be enabled to use, with "EnableAutoAttacks()".
 	AutoAttacks AutoAttacks
@@ -94,8 +99,9 @@ type Unit struct {
 
 	cdTimers []*Timer
 
-	AttackTables  []*AttackTable
-	DefenseTables []*AttackTable
+	AttackTables                []*AttackTable
+	DefenseTables               []*AttackTable
+	DynamicDamageTakenModifiers []DynamicDamageTakenModifier
 
 	GCD       *Timer
 	doNothing bool // flags that this character chose to do nothing.
@@ -109,8 +115,9 @@ type Unit struct {
 	hardcastAction *PendingAction
 
 	// Fields related to waiting for certain events to happen.
-	waitingForMana float64
-	waitStartTime  time.Duration
+	waitingForEnergy float64
+	waitingForMana   float64
+	waitStartTime    time.Duration
 
 	// Cached mana return values per tick.
 	manaTickWhileCasting    float64
@@ -172,6 +179,13 @@ func (unit *Unit) AddStat(stat stats.Stat, amount float64) {
 	unit.stats[stat] += amount
 }
 
+func (unit *Unit) AddDynamicDamageTakenModifier(ddtm DynamicDamageTakenModifier) {
+	if unit.Env != nil && unit.Env.IsFinalized() {
+		panic("Already finalized, cannot add dynamic damage taken modifier!")
+	}
+	unit.DynamicDamageTakenModifiers = append(unit.DynamicDamageTakenModifiers, ddtm)
+}
+
 func (unit *Unit) AddStatsDynamic(sim *Simulation, bonus stats.Stats) {
 	if unit.Env == nil || !unit.Env.IsFinalized() {
 		panic("Not finalized, use AddStats instead!")
@@ -180,7 +194,6 @@ func (unit *Unit) AddStatsDynamic(sim *Simulation, bonus stats.Stats) {
 	unit.statsWithoutDeps = unit.statsWithoutDeps.Add(bonus)
 
 	bonus = unit.ApplyStatDependencies(bonus)
-	bonus[stats.Mana] = 0 // TODO: Mana needs special treatment
 
 	if sim.Log != nil {
 		unit.Log(sim, "Dynamic stat change: %s", bonus.FlatString())
@@ -228,13 +241,18 @@ func (unit *Unit) processDynamicBonus(sim *Simulation, bonus stats.Stats) {
 	if bonus[stats.ShadowResistance] != 0 {
 		unit.updateResistances()
 	}
+
+	if len(unit.Pets) > 0 {
+		for _, petAgent := range unit.Pets {
+			petAgent.GetPet().addOwnerStats(sim, bonus)
+		}
+	}
 }
 
 func (unit *Unit) EnableDynamicStatDep(sim *Simulation, dep *stats.StatDependency) {
 	if unit.StatDependencyManager.EnableDynamicStatDep(dep) {
 		oldStats := unit.stats
 		unit.stats = unit.ApplyStatDependencies(unit.statsWithoutDeps)
-		unit.stats[stats.Mana] = oldStats[stats.Mana] // Need to reset mana because it's also used as current mana.
 		unit.processDynamicBonus(sim, unit.stats.Subtract(oldStats))
 
 		if sim.Log != nil {
@@ -246,7 +264,6 @@ func (unit *Unit) DisableDynamicStatDep(sim *Simulation, dep *stats.StatDependen
 	if unit.StatDependencyManager.DisableDynamicStatDep(dep) {
 		oldStats := unit.stats
 		unit.stats = unit.ApplyStatDependencies(unit.statsWithoutDeps)
-		unit.stats[stats.Mana] = oldStats[stats.Mana] // Need to reset mana because it's also used as current mana.
 		unit.processDynamicBonus(sim, unit.stats.Subtract(oldStats))
 
 		if sim.Log != nil {
@@ -335,8 +352,8 @@ func (unit *Unit) Armor() float64 {
 	return unit.PseudoStats.ArmorMultiplier * unit.stats[stats.Armor]
 }
 
-func (unit *Unit) ArmorPenetrationPercentage() float64 {
-	return MaxFloat(MinFloat(unit.stats[stats.ArmorPenetration]/ArmorPenPerPercentArmor, 100.0)*0.01, 0.0)
+func (unit *Unit) ArmorPenetrationPercentage(armorPenRating float64) float64 {
+	return MaxFloat(MinFloat(armorPenRating/ArmorPenPerPercentArmor, 100.0)*0.01, 0.0)
 }
 
 func (unit *Unit) RangedSwingSpeed() float64 {
@@ -401,10 +418,12 @@ func (unit *Unit) reset(sim *Simulation, agent Agent) {
 	unit.stats = unit.initialStats
 	unit.PseudoStats = unit.initialPseudoStats
 	unit.auraTracker.reset(sim)
+	// Spellbook needs to be reset AFTER auras.
 	for _, spell := range unit.Spellbook {
 		spell.reset(sim)
 	}
 
+	unit.manaBar.reset()
 	unit.healthBar.reset(sim)
 	unit.UpdateManaRegenRates()
 

@@ -64,16 +64,16 @@ export class BalanceDruidSimUI extends IndividualSimUI<Spec.SpecBalanceDruid> {
 
 			defaults: {
 				// Default equipped gear.
-				gear: Presets.P1_PRESET.gear,
+                gear: Presets.PRE_RAID_PRESET.gear,
 				// Default EP weights for sorting gear in the gear picker.
 				epWeights: Stats.fromMap({
-					[Stat.StatIntellect]: 0.54,
-					[Stat.StatSpirit]: 0.1,
+					[Stat.StatIntellect]: 0.52,
+					[Stat.StatSpirit]: 0.3,
 					[Stat.StatSpellPower]: 1,
-					[Stat.StatArcaneSpellPower]: 1,
-					[Stat.StatNatureSpellPower]: 0,
-					[Stat.StatSpellCrit]: 0.84,
-					[Stat.StatSpellHaste]: 1.29,
+					[Stat.StatArcaneSpellPower]: 0.45,
+					[Stat.StatNatureSpellPower]: 0.50,
+					[Stat.StatSpellCrit]: 0.61,
+					[Stat.StatSpellHaste]: 0.67,
 					[Stat.StatMP5]: 0.00,
 				}),
 				// Default consumes settings.
@@ -87,7 +87,7 @@ export class BalanceDruidSimUI extends IndividualSimUI<Spec.SpecBalanceDruid> {
 				// Default raid/party buffs settings.
 				raidBuffs: Presets.DefaultRaidBuffs,
 
-				partyBuffs: PartyBuffs.create({}),
+				partyBuffs: Presets.DefaultPartyBuffs,
 
 				individualBuffs: Presets.DefaultIndividualBuffs,
 
@@ -102,6 +102,13 @@ export class BalanceDruidSimUI extends IndividualSimUI<Spec.SpecBalanceDruid> {
             rotationInputs: DruidInputs.BalanceDruidRotationConfig,
             // Buff and Debuff inputs to include/exclude, overriding the EP-based defaults.
             includeBuffDebuffInputs: [
+                IconInputs.MeleeHasteBuff,
+                IconInputs.MeleeCritBuff,
+                IconInputs.AttackPowerPercentBuff,
+                IconInputs.AttackPowerBuff,
+                IconInputs.MajorArmorDebuff,
+                IconInputs.MinorArmorDebuff,
+                IconInputs.PhysicalDamageDebuff,
             ],
             excludeBuffDebuffInputs: [
             ],
@@ -124,6 +131,7 @@ export class BalanceDruidSimUI extends IndividualSimUI<Spec.SpecBalanceDruid> {
 				// Preset gear configurations that the user can quickly select.
 				gear: [
 					Presets.P1_PRESET,
+                    Presets.PRE_RAID_PRESET,
 				],
 			},
 		});

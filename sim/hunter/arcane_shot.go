@@ -45,9 +45,7 @@ func (hunter *Hunter) registerArcaneShotSpell(timer *core.Timer) {
 			ProcMask:        core.ProcMaskRangedSpecial,
 			BonusCritRating: 2 * core.CritRatingPerCritChance * float64(hunter.Talents.SurvivalInstincts),
 			DamageMultiplier: 1 *
-				(1 + 0.05*float64(hunter.Talents.ImprovedArcaneShot)) *
-				(1 + 0.03*float64(hunter.Talents.FerociousInspiration)) *
-				(1 + 0.01*float64(hunter.Talents.MarkedForDeath)),
+				hunter.markedForDeathMultiplier(),
 			ThreatMultiplier: 1,
 
 			BaseDamage: core.BaseDamageConfig{
@@ -59,5 +57,9 @@ func (hunter *Hunter) registerArcaneShotSpell(timer *core.Timer) {
 			OutcomeApplier:  hunter.OutcomeFuncRangedHitAndCrit(hunter.critMultiplier(true, true, hunter.CurrentTarget)),
 			OnSpellHitDealt: onSpellHit,
 		}),
+
+		InitialDamageMultiplier: 1 +
+			.03*float64(hunter.Talents.FerociousInspiration) +
+			.05*float64(hunter.Talents.ImprovedArcaneShot),
 	})
 }

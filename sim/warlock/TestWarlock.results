@@ -16,7 +16,7 @@ character_stats_results: {
   final_stats: 0
   final_stats: 109
   final_stats: 368.696
-  final_stats: 865.9778544969
+  final_stats: 865.00955
   final_stats: 722
   final_stats: 0
   final_stats: 1205.49
@@ -52,434 +52,434 @@ character_stats_results: {
 dps_results: {
  key: "TestWarlock-AllItems-AshtongueTalismanofShadows-32493"
  value: {
-  dps: 6705.6135302446
-  tps: 6058.8588147044
+  dps: 7086.40082
+  tps: 6368.2015
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-AustereEarthsiegeDiamond"
  value: {
-  dps: 6508.3886712446
-  tps: 5860.8124612957
+  dps: 6906.41649
+  tps: 6178.68766
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-BeamingEarthsiegeDiamond"
  value: {
-  dps: 6525.2749611571
-  tps: 5877.6987512082
+  dps: 6926.15564
+  tps: 6198.42681
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-BracingEarthsiegeDiamond"
  value: {
-  dps: 6566.5071438685
-  tps: 5919.2084331961
+  dps: 6947.68273
+  tps: 6220.24095
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-ChaoticSkyflareDiamond"
  value: {
-  dps: 6611.2069477007
-  tps: 5963.6307377518
+  dps: 7012.49105
+  tps: 6284.76222
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-CorruptorRaiment"
  value: {
-  dps: 5248.5478767946
-  tps: 4660.3445684421
+  dps: 5495.58623
+  tps: 4852.98549
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-DarkCoven'sRegalia"
  value: {
-  dps: 5878.9092264136
-  tps: 5260.3356480307
+  dps: 7724.73088
+  tps: 6957.65603
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-DeathbringerGarb"
  value: {
-  dps: 6462.3134797462
-  tps: 5826.6965811569
+  dps: 6624.9588
+  tps: 5922.69002
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-DestructiveSkyflareDiamond"
  value: {
-  dps: 6530.2072418302
-  tps: 5882.6310318813
+  dps: 6929.20702
+  tps: 6201.47819
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-EffulgentSkyflareDiamond"
  value: {
-  dps: 6508.3886712446
-  tps: 5860.8124612957
+  dps: 6906.41649
+  tps: 6178.68766
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-EmberSkyflareDiamond"
  value: {
-  dps: 6566.5071438685
-  tps: 5919.2084331961
+  dps: 6947.68273
+  tps: 6220.24095
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-EnigmaticSkyflareDiamond"
  value: {
-  dps: 6525.2749611571
-  tps: 5877.6987512082
+  dps: 6926.15564
+  tps: 6198.42681
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-EnigmaticStarflareDiamond"
  value: {
-  dps: 6520.1594547765
-  tps: 5872.5832448276
+  dps: 6922.75284
+  tps: 6195.02401
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-EternalEarthsiegeDiamond"
  value: {
-  dps: 6508.3886712446
-  tps: 5860.8124612957
+  dps: 6906.41649
+  tps: 6178.68766
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-ForlornSkyflareDiamond"
  value: {
-  dps: 6566.5071438685
-  tps: 5919.2084331961
+  dps: 6947.68273
+  tps: 6220.24095
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-ForlornStarflareDiamond"
  value: {
-  dps: 6578.1909288901
-  tps: 5930.3269544165
+  dps: 6971.22951
+  tps: 6240.94104
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-Gladiator'sFelshroud"
  value: {
-  dps: 6583.0174794691
-  tps: 5950.2453408053
+  dps: 7031.95989
+  tps: 6326.63842
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-Gul'dan'sRegalia"
  value: {
-  dps: 5603.1401817246
-  tps: 4955.5969447724
+  dps: 7055.82921
+  tps: 6263.4813
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-ImpassiveSkyflareDiamond"
  value: {
-  dps: 6525.2749611571
-  tps: 5877.6987512082
+  dps: 6926.15564
+  tps: 6198.42681
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-ImpassiveStarflareDiamond"
  value: {
-  dps: 6520.1594547765
-  tps: 5872.5832448276
+  dps: 6922.75284
+  tps: 6195.02401
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-InsightfulEarthsiegeDiamond"
  value: {
-  dps: 6561.6794360245
-  tps: 5913.1656567752
+  dps: 6929.66779
+  tps: 6200.43873
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-InvigoratingEarthsiegeDiamond"
  value: {
-  dps: 6508.3886712446
-  tps: 5860.8124612957
+  dps: 6906.41649
+  tps: 6178.68766
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-MaleficRaiment"
  value: {
-  dps: 5021.1857011798
-  tps: 4440.2825978165
+  dps: 5251.44058
+  tps: 4621.99863
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-OblivionRaiment"
  value: {
-  dps: 5049.7523395044
-  tps: 4486.3173256877
+  dps: 5326.22761
+  tps: 4717.20631
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-PersistentEarthshatterDiamond"
  value: {
-  dps: 6508.3886712446
-  tps: 5860.8124612957
+  dps: 6906.41649
+  tps: 6178.68766
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-PersistentEarthsiegeDiamond"
  value: {
-  dps: 6508.3886712446
-  tps: 5860.8124612957
+  dps: 6906.41649
+  tps: 6178.68766
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-PlagueheartGarb"
  value: {
-  dps: 5833.8101815087
-  tps: 5232.4433549341
+  dps: 6182.20467
+  tps: 5524.47017
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-PowerfulEarthshatterDiamond"
  value: {
-  dps: 6508.3886712446
-  tps: 5860.8124612957
+  dps: 6906.41649
+  tps: 6178.68766
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-PowerfulEarthsiegeDiamond"
  value: {
-  dps: 6508.3886712446
-  tps: 5860.8124612957
+  dps: 6906.41649
+  tps: 6178.68766
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-RelentlessEarthsiegeDiamond"
  value: {
-  dps: 6592.800891696
-  tps: 5945.2246817471
+  dps: 6990.97537
+  tps: 6263.24654
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-RevitalizingSkyflareDiamond"
  value: {
-  dps: 6544.6835232133
-  tps: 5895.8673410221
+  dps: 6960.49791
+  tps: 6229.27177
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-SwiftSkyflareDiamond"
  value: {
-  dps: 6508.3886712446
-  tps: 5860.8124612957
+  dps: 6906.41649
+  tps: 6178.68766
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-SwiftStarflareDiamond"
  value: {
-  dps: 6508.3886712446
-  tps: 5860.8124612957
+  dps: 6906.41649
+  tps: 6178.68766
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-SwiftWindfireDiamond"
  value: {
-  dps: 6508.3886712446
-  tps: 5860.8124612957
+  dps: 6906.41649
+  tps: 6178.68766
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-TheBlackBook-19337"
  value: {
-  dps: 6570.3198356148
-  tps: 5927.5244590183
+  dps: 6951.23304
+  tps: 6235.4777
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-ThunderingSkyflareDiamond"
  value: {
-  dps: 6508.3886712446
-  tps: 5860.8124612957
+  dps: 6906.41649
+  tps: 6178.68766
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-TirelessSkyflareDiamond"
  value: {
-  dps: 6566.5071438685
-  tps: 5919.2084331961
+  dps: 6947.68273
+  tps: 6220.24095
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-TirelessStarflareDiamond"
  value: {
-  dps: 6578.1909288901
-  tps: 5930.3269544165
+  dps: 6971.22951
+  tps: 6240.94104
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-TrenchantEarthshatterDiamond"
  value: {
-  dps: 6578.1909288901
-  tps: 5930.3269544165
+  dps: 6971.22951
+  tps: 6240.94104
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-TrenchantEarthsiegeDiamond"
  value: {
-  dps: 6566.5071438685
-  tps: 5919.2084331961
+  dps: 6947.68273
+  tps: 6220.24095
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-VoidStarTalisman-30449"
  value: {
-  dps: 6606.4226369575
-  tps: 5962.333710405
+  dps: 7028.27252
+  tps: 6317.81297
  }
 }
 dps_results: {
  key: "TestWarlock-AllItems-VoidheartRaiment"
  value: {
-  dps: 5237.4512084314
-  tps: 4657.2879128937
+  dps: 5544.67594
+  tps: 4871.58472
  }
 }
 dps_results: {
  key: "TestWarlock-Average-Default"
  value: {
-  dps: 6644.5240474978
-  tps: 5999.9278685525
+  dps: 7013.65435
+  tps: 6287.89071
  }
 }
 dps_results: {
  key: "TestWarlock-Settings-Orc-P1-Affliction Warlock-FullBuffs-LongMultiTarget"
  value: {
-  dps: 5833.6016058817
-  tps: 7000.4575089105
+  dps: 6143.34469
+  tps: 7202.70878
  }
 }
 dps_results: {
  key: "TestWarlock-Settings-Orc-P1-Affliction Warlock-FullBuffs-LongSingleTarget"
  value: {
-  dps: 5833.6016058817
-  tps: 5187.9235782438
+  dps: 6143.34469
+  tps: 5432.50109
  }
 }
 dps_results: {
  key: "TestWarlock-Settings-Orc-P1-Affliction Warlock-FullBuffs-ShortSingleTarget"
  value: {
-  dps: 6280.2140081244
-  tps: 5453.2517819801
+  dps: 6500.63466
+  tps: 5658.15897
  }
 }
 dps_results: {
  key: "TestWarlock-Settings-Orc-P1-Affliction Warlock-NoBuffs-LongMultiTarget"
  value: {
-  dps: 3421.8910327336
-  tps: 5374.4087984948
+  dps: 3670.63734
+  tps: 5531.50993
  }
 }
 dps_results: {
  key: "TestWarlock-Settings-Orc-P1-Affliction Warlock-NoBuffs-LongSingleTarget"
  value: {
-  dps: 3421.8910327336
-  tps: 3223.7433184948
+  dps: 3670.63734
+  tps: 3432.97893
  }
 }
 dps_results: {
  key: "TestWarlock-Settings-Orc-P1-Affliction Warlock-NoBuffs-ShortSingleTarget"
  value: {
-  dps: 3386.3006032244
-  tps: 3066.7757676677
+  dps: 3397.15756
+  tps: 3069.03369
  }
 }
 dps_results: {
  key: "TestWarlock-Settings-Orc-P1-Demonology Warlock-FullBuffs-LongMultiTarget"
  value: {
-  dps: 9618.0611364719
-  tps: 10895.094507341
+  dps: 9830.84547
+  tps: 10879.82533
  }
 }
 dps_results: {
  key: "TestWarlock-Settings-Orc-P1-Demonology Warlock-FullBuffs-LongSingleTarget"
  value: {
-  dps: 6231.1384132994
-  tps: 5229.2025307232
+  dps: 6198.98309
+  tps: 5260.62569
  }
 }
 dps_results: {
  key: "TestWarlock-Settings-Orc-P1-Demonology Warlock-FullBuffs-ShortSingleTarget"
  value: {
-  dps: 7413.3851089051
-  tps: 6124.5243884354
+  dps: 7041.70857
+  tps: 5882.88538
  }
 }
 dps_results: {
  key: "TestWarlock-Settings-Orc-P1-Demonology Warlock-NoBuffs-LongMultiTarget"
  value: {
-  dps: 6899.0314037607
-  tps: 9191.8931185199
+  dps: 6989.64548
+  tps: 9116.46839
  }
 }
 dps_results: {
  key: "TestWarlock-Settings-Orc-P1-Demonology Warlock-NoBuffs-LongSingleTarget"
  value: {
-  dps: 3733.9512684911
-  tps: 3435.5680526415
+  dps: 3706.36381
+  tps: 3445.02924
  }
 }
 dps_results: {
  key: "TestWarlock-Settings-Orc-P1-Demonology Warlock-NoBuffs-ShortSingleTarget"
  value: {
-  dps: 3957.1317614367
-  tps: 3530.1240344417
+  dps: 3704.96488
+  tps: 3351.70256
  }
 }
 dps_results: {
  key: "TestWarlock-Settings-Orc-P1-Destro Warlock-FullBuffs-LongMultiTarget"
  value: {
-  dps: 5802.6686563666
-  tps: 6205.3310358061
+  dps: 5183.95759
+  tps: 5855.48056
  }
 }
 dps_results: {
  key: "TestWarlock-Settings-Orc-P1-Destro Warlock-FullBuffs-LongSingleTarget"
  value: {
-  dps: 5802.6686563666
-  tps: 4241.8850641394
+  dps: 5183.95759
+  tps: 3925.69752
  }
 }
 dps_results: {
  key: "TestWarlock-Settings-Orc-P1-Destro Warlock-FullBuffs-ShortSingleTarget"
  value: {
-  dps: 6293.7377629575
-  tps: 4557.0216498282
+  dps: 5895.69539
+  tps: 4236.1306
  }
 }
 dps_results: {
  key: "TestWarlock-Settings-Orc-P1-Destro Warlock-NoBuffs-LongMultiTarget"
  value: {
-  dps: 3357.6945109086
-  tps: 4514.4323857001
+  dps: 2883.81782
+  tps: 4326.0594
  }
 }
 dps_results: {
  key: "TestWarlock-Settings-Orc-P1-Destro Warlock-NoBuffs-LongSingleTarget"
  value: {
-  dps: 3357.6945109086
-  tps: 2539.0627898667
+  dps: 2883.81782
+  tps: 2362.38677
  }
 }
 dps_results: {
  key: "TestWarlock-Settings-Orc-P1-Destro Warlock-NoBuffs-ShortSingleTarget"
  value: {
-  dps: 3331.5542529496
-  tps: 2438.418512492
+  dps: 2897.82683
+  tps: 2162.02991
  }
 }
 dps_results: {
  key: "TestWarlock-SwitchInFrontOfTarget-Default"
  value: {
-  dps: 6546.9309725568
-  tps: 5963.6307377518
+  dps: 6978.47746
+  tps: 6284.76222
  }
 }

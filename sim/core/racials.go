@@ -17,7 +17,48 @@ func applyRaceEffects(agent Agent) {
 		character.PseudoStats.ReducedFrostHitTakenChance += 0.02
 		character.PseudoStats.ReducedNatureHitTakenChance += 0.02
 		character.PseudoStats.ReducedShadowHitTakenChance += 0.02
-		// TODO: Add major cooldown: arcane torrent
+
+		var actionID ActionID
+
+		var resourceMetrics *ResourceMetrics = nil
+		if resourceMetrics == nil {
+			if character.HasRunicPowerBar() {
+				actionID = ActionID{SpellID: 50613}
+				resourceMetrics = character.NewRunicPowerMetrics(actionID)
+			} else if character.HasEnergyBar() {
+				actionID = ActionID{SpellID: 25046}
+				resourceMetrics = character.NewEnergyMetrics(actionID)
+			} else if character.HasManaBar() {
+				actionID = ActionID{SpellID: 28730}
+				resourceMetrics = character.NewManaMetrics(actionID)
+			}
+		}
+
+		spell := character.RegisterSpell(SpellConfig{
+			ActionID: actionID,
+			Flags:    SpellFlagNoOnCastComplete,
+			Cast: CastConfig{
+				CD: Cooldown{
+					Timer:    character.NewTimer(),
+					Duration: time.Minute * 2,
+				},
+			},
+			ApplyEffects: func(sim *Simulation, _ *Unit, spell *Spell) {
+				if spell.Unit.HasRunicPowerBar() {
+					spell.Unit.AddRunicPower(sim, 15.0, resourceMetrics)
+				} else if spell.Unit.HasEnergyBar() {
+					spell.Unit.AddEnergy(sim, 15.0, resourceMetrics)
+				} else if spell.Unit.HasManaBar() {
+					spell.Unit.AddMana(sim, spell.Unit.MaxMana()*0.06, resourceMetrics, false)
+				}
+			},
+		})
+
+		character.AddMajorCooldown(MajorCooldown{
+			Spell:    spell,
+			Type:     CooldownTypeDPS,
+			Priority: CooldownPriorityLow,
+		})
 	case proto.Race_RaceDraenei:
 		character.PseudoStats.ReducedShadowHitTakenChance += 0.02
 		// TODO: Gift of the naaru for healers
@@ -36,7 +77,6 @@ func applyRaceEffects(agent Agent) {
 			5*ExpertisePerQuarterPercentReduction,
 			[]proto.WeaponType{proto.WeaponType_WeaponTypeMace})
 
-		// TODO: Stoneform
 		actionID := ActionID{SpellID: 20594}
 
 		statDep := character.NewDynamicMultiplyStat(stats.Armor, 1.1)

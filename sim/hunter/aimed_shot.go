@@ -41,8 +41,7 @@ func (hunter *Hunter) registerAimedShotSpell(timer *core.Timer) {
 			BonusCritRating: 4*core.CritRatingPerCritChance*float64(hunter.Talents.ImprovedBarrage) +
 				core.TernaryFloat64(hunter.Talents.TrueshotAura && hunter.HasMajorGlyph(proto.HunterMajorGlyph_GlyphOfTrueshotAura), 10*core.CritRatingPerCritChance, 0),
 			DamageMultiplier: 1 *
-				(1 + 0.04*float64(hunter.Talents.Barrage)) *
-				(1 + 0.01*float64(hunter.Talents.MarkedForDeath)),
+				hunter.markedForDeathMultiplier(),
 			ThreatMultiplier: 1,
 
 			BaseDamage: core.BaseDamageConfig{
@@ -57,5 +56,8 @@ func (hunter *Hunter) registerAimedShotSpell(timer *core.Timer) {
 			},
 			OutcomeApplier: hunter.OutcomeFuncRangedHitAndCrit(hunter.critMultiplier(true, true, hunter.CurrentTarget)),
 		}),
+
+		InitialDamageMultiplier: 1 +
+			.04*float64(hunter.Talents.Barrage),
 	})
 }

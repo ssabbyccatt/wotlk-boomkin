@@ -22,7 +22,9 @@ func (dk *DpsDeathknight) setupUnholyRotations() {
 
 	if dk.Rotation.UseDeathAndDecay || !dk.Talents.ScourgeStrike {
 		if dk.Rotation.DeathAndDecayPrio == proto.Deathknight_Rotation_MaxRuneDowntime {
-			dk.RotationSequence.NewAction(dk.RotationActionCallback_UnholyDndRotation)
+			dk.RotationSequence.
+				NewAction(dk.RotationActionCallback_DND).
+				NewAction(dk.RotationActionCallback_UnholyDndRotation)
 		} else {
 			dk.dndExperimentalOpener()
 		}
@@ -253,20 +255,32 @@ func (dk *DpsDeathknight) uhAfterGargoyleSequence(sim *core.Simulation) {
 			dk.RotationSequence.NewAction(dk.RotationActionUH_CancelBT)
 		}
 
+		didErw := false
 		if dk.Rotation.ArmyOfTheDead != proto.Deathknight_Rotation_DoNotUse && dk.ArmyOfTheDead.IsReady(sim) {
 			// If not enough runes for aotd cast ERW
 			if dk.CurrentBloodRunes() < 1 || dk.CurrentFrostRunes() < 1 || dk.CurrentUnholyRunes() < 1 {
 				dk.RotationSequence.NewAction(dk.RotationActionCallback_ERW)
+				didErw = true
 			}
 			dk.RotationSequence.NewAction(dk.RotationActionCallback_AOTD)
 		} else {
-			// If no runes cast ERW TODO: Figure out when to do it after
-			if dk.CurrentBloodRunes() < 1 && dk.CurrentFrostRunes() < 1 && dk.CurrentUnholyRunes() < 1 {
+			// If no runes soon cast ERW
+			if dk.CurrentBloodRunes() < 1 && dk.CurrentFrostRunes() < 1 && dk.CurrentUnholyRunes() < 1 && dk.AnyRuneReadyAt(sim)-sim.CurrentTime > 2*time.Second {
 				dk.RotationSequence.NewAction(dk.RotationActionCallback_ERW)
+				didErw = true
 			}
 		}
 
-		dk.RotationSequence.NewAction(dk.RotationActionCallback_BP)
+		if !dk.PresenceMatches(deathknight.BloodPresence) {
+			if didErw || dk.CurrentBloodRunes() > 0 {
+				dk.RotationSequence.NewAction(dk.RotationActionCallback_BP)
+			} else if !didErw && !dk.Rotation.BtGhoulFrenzy && dk.BloodTap.IsReady(sim) {
+				dk.RotationSequence.
+					NewAction(dk.RotationActionCallback_BT).
+					NewAction(dk.RotationActionCallback_BP).
+					NewAction(dk.RotationActionUH_CancelBT)
+			}
+		}
 
 		if dk.Rotation.UseDeathAndDecay || !dk.Talents.ScourgeStrike {
 			dk.RotationSequence.NewAction(dk.RotationActionUH_ResetToDndMain)
@@ -304,24 +318,64 @@ func (dk *DpsDeathknight) uhGhoulFrenzySequence(sim *core.Simulation, bloodTap b
 func (dk *DpsDeathknight) uhRecastDiseasesSequence(sim *core.Simulation) {
 	dk.RotationSequence.Clear()
 
-	if dk.ur.ffFirst {
-		dk.RotationSequence.
-			NewAction(dk.RotationActionUH_FF_ClipCheck).
-			NewAction(dk.RotationActionUH_IT_Custom).
-			NewAction(dk.RotationActionUH_BP_ClipCheck).
-			NewAction(dk.RotationActionUH_PS_Custom)
-	} else {
-		dk.RotationSequence.
-			NewAction(dk.RotationActionUH_BP_ClipCheck).
-			NewAction(dk.RotationActionUH_PS_Custom).
-			NewAction(dk.RotationActionUH_FF_ClipCheck).
-			NewAction(dk.RotationActionUH_IT_Custom)
+	// If we have glyph of Disease and both dots active try to refresh with pesti
+	didPesti := false
+	if dk.ur.hasGod {
+		if dk.FrostFeverDisease[dk.CurrentTarget.Index].IsActive() && dk.BloodPlagueDisease[dk.CurrentTarget.Index].IsActive() {
+			didPesti = true
+			dk.RotationSequence.NewAction(dk.RotationActionCallback_Pesti_Custom)
+		}
+	}
+
+	// If we did not pesti queue normal dot refresh
+	if !didPesti {
+		if dk.ur.ffFirst {
+			dk.RotationSequence.
+				NewAction(dk.RotationActionUH_FF_ClipCheck).
+				NewAction(dk.RotationActionUH_IT_Custom).
+				NewAction(dk.RotationActionUH_BP_ClipCheck).
+				NewAction(dk.RotationActionUH_PS_Custom)
+		} else {
+			dk.RotationSequence.
+				NewAction(dk.RotationActionUH_BP_ClipCheck).
+				NewAction(dk.RotationActionUH_PS_Custom).
+				NewAction(dk.RotationActionUH_FF_ClipCheck).
+				NewAction(dk.RotationActionUH_IT_Custom)
+		}
 	}
 
 	if dk.Rotation.UseDeathAndDecay || !dk.Talents.ScourgeStrike {
 		dk.RotationSequence.NewAction(dk.RotationActionUH_ResetToDndMain)
 	} else {
 		dk.RotationSequence.NewAction(dk.RotationActionUH_ResetToSsMain)
+	}
+}
+
+func (dk *DpsDeathknight) RotationActionCallback_Pesti_Custom(sim *core.Simulation, target *core.Unit, s *deathknight.Sequence) time.Duration {
+	// If we have both dots active try to refresh with pesti and move to normal rotation
+	if dk.FrostFeverDisease[dk.CurrentTarget.Index].IsActive() && dk.BloodPlagueDisease[dk.CurrentTarget.Index].IsActive() {
+		dk.Pestilence.Cast(sim, target)
+		s.Advance()
+
+		return -1
+	} else {
+		// If a disease has dropped do normal reapply
+		dk.RotationSequence.Clear()
+
+		if dk.ur.ffFirst {
+			dk.RotationSequence.
+				NewAction(dk.RotationActionUH_FF_ClipCheck).
+				NewAction(dk.RotationActionUH_IT_Custom).
+				NewAction(dk.RotationActionUH_BP_ClipCheck).
+				NewAction(dk.RotationActionUH_PS_Custom)
+		} else {
+			dk.RotationSequence.
+				NewAction(dk.RotationActionUH_BP_ClipCheck).
+				NewAction(dk.RotationActionUH_PS_Custom).
+				NewAction(dk.RotationActionUH_FF_ClipCheck).
+				NewAction(dk.RotationActionUH_IT_Custom)
+		}
+		return sim.CurrentTime
 	}
 }
 
